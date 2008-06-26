@@ -1,0 +1,6 @@
+ocaml-libvirt (0.4.2.4-1) unstable; urgency=low
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- Guido Guenther <agx@sigxcpu.org>  Thu, 26 Jun 2008 09:42:18 +0200
+

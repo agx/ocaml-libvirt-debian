@@ -1,0 +1,68 @@
+diff --git a/libvirt/Makefile.in b/libvirt/Makefile.in
+index bca1cdf..9cc96f0 100644
+--- a/libvirt/Makefile.in
++++ b/libvirt/Makefile.in
+@@ -124,8 +124,15 @@ libvirt.cmi: libvirt.mli
+ libvirt_version.cmo: libvirt_version.cmi
+ libvirt_version.cmi: libvirt_version.mli
+ 
+-install:
+-	ocamlfind install libvirt \
+-	  ../META *.so *.a *.cmx *.cma *.cmxa *.cmi *.mli
++
++install-byte:
++	mkdir -p $(OCAMLDESTDIR)
++	ocamlfind install -destdir $(OCAMLDESTDIR) -ldconf ignore libvirt \
++	  ../META *.so *.a *.cma *.cmi *.mli
++
++install-opt:
++	mkdir -p $(OCAMLDESTDIR)
++	ocamlfind install -destdir $(OCAMLDESTDIR) -ldconf ignore libvirt \
++	  ../META *.so *.a *.cmx *.cmxa *.cmi *.mli
+ 
+ include ../Make.rules
+diff --git a/Makefile.in b/Makefile.in
+index da44e9c..8a74647 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -27,7 +27,7 @@ OCAMLDOCFLAGS	:= -html -sort
+ 
+ SUBDIRS		= libvirt mlvirsh examples
+ 
+-all opt depend install:
++all opt depend install-opt install-byte:
+ 	for d in $(SUBDIRS); do \
+ 	  $(MAKE) -C $$d $@; \
+ 	  if [ $$? -ne 0 ]; then exit 1; fi; \
+@@ -141,4 +141,4 @@ winupload:
+ force:
+ 
+ .PHONY: all opt depend install clean distclean configure dist check-manifest \
+-	release release_stage_2 release_stage_3 force
+\ No newline at end of file
++	release release_stage_2 release_stage_3 force
+diff --git a/examples/Makefile.in b/examples/Makefile.in
+index 6fd8093..9bed8ec 100644
+--- a/examples/Makefile.in
++++ b/examples/Makefile.in
+@@ -54,6 +54,6 @@ node_info.opt: node_info.cmx
+ 	  $(OCAMLOPTPACKAGES) $(OCAMLOPTFLAGS) $(OCAMLOPTLIBS) \
+ 	  ../libvirt/mllibvirt.cmxa -o $@ $<
+ 
+-install:
++install-opt install-byte:
+ 
+ include ../Make.rules
+diff --git a/mlvirsh/Makefile.in b/mlvirsh/Makefile.in
+index 23d6e1e..779513c 100644
+--- a/mlvirsh/Makefile.in
++++ b/mlvirsh/Makefile.in
+@@ -84,7 +84,7 @@ mlvirsh.opt: $(XOBJS)
+ 	  ../libvirt/mllibvirt.cmxa -o $@ $^
+ endif
+ 
+-install:
++install-opt:
+ 	if [ -x mlvirsh.opt ]; then \
+ 	  mkdir -p $(DESTDIR)$(bindir); \
+ 	  $(INSTALL) -m 0755 mlvirsh.opt $(DESTDIR)$(bindir)/mlvirsh; \

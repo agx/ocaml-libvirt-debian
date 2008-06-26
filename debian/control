@@ -1,0 +1,34 @@
+Source: ocaml-libvirt
+Section: libdevel
+Priority: extra
+Maintainer: Debian Libvirt Maintainers <pkg-libvirt-maintainers@lists.alioth.debian.org>
+Uploaders: Guido Guenther <agx@sigxcpu.org>
+Build-Depends: cdbs, debhelper (>= 6), autotools-dev, libvirt-bin, ocaml-nox, ocaml-findlib, quilt
+Standards-Version: 3.8.0
+Homepage: http://libvirt.org/ocaml/
+
+Package: libvirt-ocaml
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: OCaml bindings for libvirt
+ This library provides OCaml bindings for using libvirt.
+ .
+ Libvirt is a toolkit to interact with the virtualization capabilities
+ of recent versions of Linux (and other OSes). The library aims at providing
+ a long term stable C API for different virtualization mechanisms. It currently
+ supports QEMU, KVM, and XEN.
+ .
+ This package contains the shared library
+
+Package: libvirt-ocaml-dev
+Architecture: any
+Depends: libvirt-ocaml (= ${binary:Version})
+Description: OCaml bindings for libvirt
+ This library provides OCaml bindings for using libvirt.
+ .
+ Libvirt is a toolkit to interact with the virtualization capabilities
+ of recent versions of Linux (and other OSes). The library aims at providing
+ a long term stable C API for different virtualization mechanisms. It currently
+ supports QEMU, KVM, and XEN.
+ .
+ This package contains the shared library
