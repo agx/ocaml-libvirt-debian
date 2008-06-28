@@ -1,6 +1,10 @@
 ocaml-libvirt (0.4.2.4-1) unstable; urgency=low
 
+  [ Guido Guenther ]
   * Initial release (Closes: #488229)
 
- -- Guido Guenther <agx@sigxcpu.org>  Thu, 26 Jun 2008 09:42:18 +0200
+  [ Sylvain Le Gall ]
+  * Add manpage for mlvirsh
+  * Ship *.mo file
 
+ -- Sylvain Le Gall <gildor@debian.org>  Sat, 28 Jun 2008 19:26:14 +0200
