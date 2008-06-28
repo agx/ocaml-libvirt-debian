@@ -46,7 +46,14 @@ DOCBOOK_MANPAGE_SOURCES := $(CURDIR)/debian/xml-man/en/mlvirsh.xml
 DOCBOOK_MANPAGE_EXTRA_SOURCES := $(CURDIR)/debian/xml-man/en/license.xml      \
                                  $(CURDIR)/debian/xml-man/en/refentryinfo.xml
 
+build/libvirt-ocaml::
+	$(MAKE) -C '$(CURDIR)/po' all
+
+install/libvirt-ocaml::
+	$(MAKE) -C '$(CURDIR)/po' install PODIR=$(DESTDIR)/usr/share/locale
+
 clean::
+	if test -e $(CURDIR)/po/Makefile; then $(MAKE) -C '$(CURDIR)/po' clean; fi
 	-$(RM) '$(CURDIR)/META'
 	-$(RM) '$(CURDIR)/Make.rules'
 	-$(RM) '$(CURDIR)/Makefile'
