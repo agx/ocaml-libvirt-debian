@@ -1,8 +1,8 @@
-diff --git a/libvirt/Makefile.in b/libvirt/Makefile.in
-index bca1cdf..9cc96f0 100644
---- a/libvirt/Makefile.in
-+++ b/libvirt/Makefile.in
-@@ -124,8 +124,15 @@ libvirt.cmi: libvirt.mli
+Index: ocaml-libvirt/libvirt/Makefile.in
+===================================================================
+--- ocaml-libvirt.orig/libvirt/Makefile.in	2008-06-28 18:50:51.000000000 +0200
++++ ocaml-libvirt/libvirt/Makefile.in	2008-06-28 18:55:32.000000000 +0200
+@@ -124,8 +124,15 @@
  libvirt_version.cmo: libvirt_version.cmi
  libvirt_version.cmi: libvirt_version.mli
  
@@ -18,14 +18,14 @@ index bca1cdf..9cc96f0 100644
 +install-opt:
 +	mkdir -p $(OCAMLDESTDIR)
 +	ocamlfind install -destdir $(OCAMLDESTDIR) -ldconf ignore libvirt \
-+	  ../META *.so *.a *.cmx *.cmxa *.cmi *.mli
++	  ../META *.so *.a *.cma *.cmx *.cmxa *.cmi *.mli
  
  include ../Make.rules
-diff --git a/Makefile.in b/Makefile.in
-index da44e9c..8a74647 100644
---- a/Makefile.in
-+++ b/Makefile.in
-@@ -27,7 +27,7 @@ OCAMLDOCFLAGS	:= -html -sort
+Index: ocaml-libvirt/Makefile.in
+===================================================================
+--- ocaml-libvirt.orig/Makefile.in	2008-06-28 18:50:51.000000000 +0200
++++ ocaml-libvirt/Makefile.in	2008-06-28 18:55:32.000000000 +0200
+@@ -27,7 +27,7 @@
  
  SUBDIRS		= libvirt mlvirsh examples
  
@@ -34,18 +34,18 @@ index da44e9c..8a74647 100644
  	for d in $(SUBDIRS); do \
  	  $(MAKE) -C $$d $@; \
  	  if [ $$? -ne 0 ]; then exit 1; fi; \
-@@ -141,4 +141,4 @@ winupload:
+@@ -141,4 +141,4 @@
  force:
  
  .PHONY: all opt depend install clean distclean configure dist check-manifest \
 -	release release_stage_2 release_stage_3 force
 \ No newline at end of file
 +	release release_stage_2 release_stage_3 force
-diff --git a/examples/Makefile.in b/examples/Makefile.in
-index 6fd8093..9bed8ec 100644
---- a/examples/Makefile.in
-+++ b/examples/Makefile.in
-@@ -54,6 +54,6 @@ node_info.opt: node_info.cmx
+Index: ocaml-libvirt/examples/Makefile.in
+===================================================================
+--- ocaml-libvirt.orig/examples/Makefile.in	2008-06-28 18:50:51.000000000 +0200
++++ ocaml-libvirt/examples/Makefile.in	2008-06-28 18:55:32.000000000 +0200
+@@ -54,6 +54,6 @@
  	  $(OCAMLOPTPACKAGES) $(OCAMLOPTFLAGS) $(OCAMLOPTLIBS) \
  	  ../libvirt/mllibvirt.cmxa -o $@ $<
  
@@ -53,11 +53,11 @@ index 6fd8093..9bed8ec 100644
 +install-opt install-byte:
  
  include ../Make.rules
-diff --git a/mlvirsh/Makefile.in b/mlvirsh/Makefile.in
-index 23d6e1e..779513c 100644
---- a/mlvirsh/Makefile.in
-+++ b/mlvirsh/Makefile.in
-@@ -84,7 +84,7 @@ mlvirsh.opt: $(XOBJS)
+Index: ocaml-libvirt/mlvirsh/Makefile.in
+===================================================================
+--- ocaml-libvirt.orig/mlvirsh/Makefile.in	2008-06-28 18:50:51.000000000 +0200
++++ ocaml-libvirt/mlvirsh/Makefile.in	2008-06-28 18:56:17.000000000 +0200
+@@ -84,10 +84,16 @@
  	  ../libvirt/mllibvirt.cmxa -o $@ $^
  endif
  
@@ -66,3 +66,12 @@ index 23d6e1e..779513c 100644
  	if [ -x mlvirsh.opt ]; then \
  	  mkdir -p $(DESTDIR)$(bindir); \
  	  $(INSTALL) -m 0755 mlvirsh.opt $(DESTDIR)$(bindir)/mlvirsh; \
+ 	fi
+ 
++install-byte:
++	if [ -x mlvirsh ]; then \
++	  mkdir -p $(DESTDIR)$(bindir); \
++	  $(INSTALL) -m 0755 mlvirsh $(DESTDIR)$(bindir)/mlvirsh; \
++	fi
++
+ include ../Make.rules
