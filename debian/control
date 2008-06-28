@@ -4,7 +4,8 @@ Priority: extra
 Maintainer: Debian Libvirt Maintainers <pkg-libvirt-maintainers@lists.alioth.debian.org>
 Uploaders: Guido Guenther <agx@sigxcpu.org>, Sylvain Le Gall <gildor@debian.org>
 Build-Depends: cdbs, debhelper (>= 6), autotools-dev, libvirt-bin, ocaml-nox,
- ocaml-findlib, quilt, libvirt-dev
+ ocaml-findlib, quilt, libvirt-dev, docbook-xml (>= 4.4), docbook-xsl, 
+ libxml2-utils, xsltproc, po4a
 Standards-Version: 3.8.0
 Vcs-Browser: http://git.debian.org/?p=pkg-ocaml-maint/packages/ocaml-libvirt.git
 Vcs-Git: git://git.debian.org/git/pkg-ocaml-maint/packages/ocaml-libvirt.git

@@ -1,0 +1,792 @@
+# SOME DESCRIPTIVE TITLE
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2008-06-28 18:24+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: ENCODING"
+
+# type: Content of the debian entity
+#: debian/xml-man/en/mlvirsh.xml:4 debian/xml-man/en/license.xml:4
+msgid "Debian GNU/Linux"
+msgstr ""
+
+# type: Content of the dhprg entity
+#: debian/xml-man/en/mlvirsh.xml:5
+msgid "<command>mlvirsh</command>"
+msgstr ""
+
+# type: Content of: <refentry><refnamediv><refname>
+#: debian/xml-man/en/mlvirsh.xml:42
+msgid "mlvirsh"
+msgstr ""
+
+# type: Content of: <refentry><refnamediv><refpurpose>
+#: debian/xml-man/en/mlvirsh.xml:44
+msgid "management user interface for virsh guest domain."
+msgstr ""
+
+# type: Content of: <refentry><refsynopsisdiv><cmdsynopsis>
+#: debian/xml-man/en/mlvirsh.xml:49
+msgid ""
+"&dhprg; <arg>-c <replaceable>URI</replaceable></arg> <arg>-r</arg> <group> "
+"<arg>-help</arg> <arg>--help</arg> </group> "
+"<arg><replaceable>command</replaceable></arg>"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><title>
+#: debian/xml-man/en/mlvirsh.xml:61
+msgid "DESCRIPTION"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><para>
+#: debian/xml-man/en/mlvirsh.xml:63
+msgid "This manual page documents briefly the &dhprg; command."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><para>
+#: debian/xml-man/en/mlvirsh.xml:65
+msgid ""
+"This manual page was written for the &debian; distribution because the "
+"original program does not have a manual page."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><para>
+#: debian/xml-man/en/mlvirsh.xml:68
+msgid ""
+"&dhprg;is an almost complete reimplementation of <command>virsh</command>, "
+"which is mostly command compatible (there are a very few commands missing, "
+"and some commands have a slightly different syntax, but broadly speaking "
+"they are equivalent programs except that one is written in C and the other "
+"in OCaml)"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:76
+msgid "-c <replaceable>URI</replaceable>"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:78
+msgid "Hypervisor connection URI."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:82
+msgid "-r"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:84
+msgid "Read-only connection."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:88
+msgid "<replaceable>command</replaceable>"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:90
+msgid "Virsh command."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:94
+msgid "-help"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:95
+msgid "--help"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:97
+msgid "Display an help message."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><title>
+#: debian/xml-man/en/mlvirsh.xml:105
+msgid "COMMANDS"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><para>
+#: debian/xml-man/en/mlvirsh.xml:107
+msgid ""
+"There is an extensive list of possible virsh commands. You can get a list of "
+"it by using the special command"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><para><option>
+#: debian/xml-man/en/mlvirsh.xml:108
+msgid "help"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><para>
+#: debian/xml-man/en/mlvirsh.xml:108
+msgid ""
+"without arguments. Using the same command with another command as argument "
+"will give you the help for the command."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:114
+msgid "attach-device"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:115
+msgid "Attach device to domain."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:117
+msgid "autostart"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:118
+msgid "Set whether a domain autostarts at boot."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:121
+msgid "capabilities"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:122
+msgid "Returns capabilities of hypervisor/driver."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:125
+msgid "close"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:126
+msgid "Close an existing hypervisor connection."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:129
+msgid "connect"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:130
+msgid "Open a new hypervisor connection."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:133
+msgid "create"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:134
+msgid "Create a domain from an XML file."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:137
+msgid "define"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:138
+msgid "Define (but don't start) a domain from an XML file."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:141
+msgid "detach-device"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:142
+msgid "Detach device from domain."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:145
+msgid "destroy"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:146
+msgid "Destroy a domain."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:149
+msgid "domblkpeek"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:150
+msgid "Peek into a block device of a domain."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:153
+msgid "domblkstat"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:154
+msgid "Display the block device statistics for a domain."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:157
+msgid "domid"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:158
+msgid "Print the ID of a domain."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:161
+msgid "domifstat"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:162
+msgid "Display the network interface statistics for a domain."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:165
+msgid "dominfo"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:166
+msgid "Print the domain info."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:169
+msgid "dommaxmem"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:170
+msgid "Print the max memory (in kilobytes) of a domain."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:173
+msgid "dommaxvcpus"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:174
+msgid "Print the max VCPUs of a domain."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:177
+msgid "dommempeek"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:178
+msgid "Peek into memory of a device."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:181
+msgid "domname"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:182
+msgid "Print the name of a domain."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:185
+msgid "domostype"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:186
+msgid "Print the OS type of a domain."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:189
+msgid "domstate"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:190
+msgid "Print the domain state."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:193
+msgid "domuuid"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:194
+msgid "Print the UUID of a domain."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:197
+msgid "dump"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:198
+msgid "Core dump a domain to a file for analysis."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:201
+msgid "dumpxml"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:202
+msgid "Print the XML description of a domain."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:205
+msgid "freecell"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:206
+msgid "Display free memory for machine, NUMA cell or range of cells"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:209
+msgid "get-autostart"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:210
+msgid "Print whether a domain autostarts at boot."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:213
+msgid "hostname"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:214
+msgid "Print the hostname."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:217
+msgid "list"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:218
+msgid "List the running domains."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:221
+msgid "list-defined"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:222
+msgid "List the defined but not running domains."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:225
+msgid "quit"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:226
+msgid "Quit the interactive terminal."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:229
+msgid "maxvcpus"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:230
+msgid "Print the max VCPUs available."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:233
+msgid "net-autostart"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:234
+msgid "Set whether a network autostarts at boot."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:237
+msgid "net-bridgename"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:238
+msgid "Print the bridge name of a network."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:241
+msgid "net-create"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:242
+msgid "Create a network from an XML file."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:245
+msgid "net-define"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:246
+msgid "Define (but don't start) a network from an XML file."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:249
+msgid "net-destroy"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:250
+msgid "Destroy a network."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:253
+msgid "net-dumpxml"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:254
+msgid "Print the XML description of a network."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:257
+msgid "net-get-autostart"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:258
+msgid "Print whether a network autostarts at boot."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:261
+msgid "net-list"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:262
+msgid "List the active networks."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:265
+msgid "net-list-defined"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:266
+msgid "List the defined but inactive networks."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:269
+msgid "net-name"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:270
+msgid "Print the name of a network."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:273
+msgid "net-start"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:274
+msgid "Start a previously defined inactive network."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:277
+msgid "net-undefine"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:278
+msgid "Undefine an inactive network."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:281
+msgid "net-uuid"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:282
+msgid "Print the UUID of a network."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:285
+msgid "nodeinfo"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:286
+msgid "Print node information."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:289
+msgid "reboot"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:290
+msgid "Reboot a domain."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:293
+msgid "restore"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:294
+msgid "Restore a domain from the named file."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:297
+msgid "resume"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:298
+msgid "Resume a domain."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:301
+msgid "save"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:302
+msgid "Save a domain to a file."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:305
+msgid "schedparams"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:306
+msgid "Get the current scheduler parameters for a domain."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:309
+msgid "schedparamset"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:310
+msgid "Set the scheduler parameters for a domain."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:313
+msgid "schedtype"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:314
+msgid "Get the scheduler type."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:317
+msgid "setmem"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:318
+msgid "Set the memory used by the domain (in kilobytes)."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:321
+msgid "setmaxmem"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:322
+msgid "Set the maximum memory used by the domain (in kilobytes)."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:325
+msgid "shutdown"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:326
+msgid "Gracefully shutdown a domain."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:329
+msgid "start"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:330
+msgid "Start a previously defined inactive domain."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:333
+msgid "suspend"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:334
+msgid "Suspend a domain."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:337
+msgid "type"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:338
+msgid "Print the driver name"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:341
+msgid "undefine"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:342
+msgid "Undefine an inactive domain."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:345
+msgid "uri"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:346
+msgid "Print the canonical URI."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:349
+msgid "vcpuinfo"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:350 debian/xml-man/en/mlvirsh.xml:354
+msgid "Pin domain VCPU to a list of physical CPUs."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:353
+msgid "vcpupin"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:357
+msgid "vcpus"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:358
+msgid "Set the number of virtual CPUs assigned to a domain."
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><term><option>
+#: debian/xml-man/en/mlvirsh.xml:361
+msgid "version"
+msgstr ""
+
+# type: Content of: <refentry><refsect1><variablelist><varlistentry><listitem><para>
+#: debian/xml-man/en/mlvirsh.xml:362
+msgid "Print the driver version"
+msgstr ""
+
+# type: Content of: <refsect1><title>
+#: debian/xml-man/en/license.xml:32
+msgid "LICENSE"
+msgstr ""
+
+# type: Content of: <refsect1><para>
+#: debian/xml-man/en/license.xml:35
+msgid ""
+"This manual page was written by <personname> <firstname>Sylvain</firstname> "
+"<surname>Le Gall</surname> </personname> <email>gildor@debian.org</email> "
+"for the &debian; system (but may be used by others).  Permission is granted "
+"to copy, distribute and/or modify this document under the terms of the"
+msgstr ""
+
+# type: Content of: <refsect1><para><acronym>
+#: debian/xml-man/en/license.xml:43
+msgid "GNU"
+msgstr ""
+
+# type: Content of: <refsect1><para>
+#: debian/xml-man/en/license.xml:43
+msgid ""
+"Lesser General Public License, Version 2.1 or any later version published by "
+"the Free Software Foundation; considering as source code all the file that "
+"enable the production of this manpage."
+msgstr ""
