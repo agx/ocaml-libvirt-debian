@@ -38,8 +38,20 @@ DEB_MAKE_INSTALL_TARGET  += OCAMLDESTDIR="$(DESTDIR_DEV)/$(OCAML_STDLIB_DIR)" DE
 OCAML_OCAMLDOC_PACKAGES = libvirt-ocaml-dev
 
 clean::
-	$(RM) '$(CURDIR)/debian/libvirt-ocaml-dev.dirs'
-	$(RM) '$(CURDIR)/debian/libvirt-ocaml.dirs'
+	-$(RM) '$(CURDIR)/META'
+	-$(RM) '$(CURDIR)/Make.rules'
+	-$(RM) '$(CURDIR)/Makefile'
+	-$(RM) '$(CURDIR)/config.h'
+	-$(RM) '$(CURDIR)/config.log'
+	-$(RM) '$(CURDIR)/config.status'
+	-$(RM) '$(CURDIR)/examples/Makefile'
+	-$(RM) '$(CURDIR)/libvirt/Makefile'
+	-$(RM) '$(CURDIR)/libvirt/libvirt_version.ml'
+	-$(RM) '$(CURDIR)/mlvirsh/Makefile'
+	-$(RM) '$(CURDIR)/mlvirsh/mlvirsh_gettext.ml'
+	-$(RM) '$(CURDIR)/po/Makefile'
+	-$(RM) '$(CURDIR)/debian/libvirt-ocaml-dev.dirs'
+	-$(RM) '$(CURDIR)/debian/libvirt-ocaml.dirs'
 
 install/libvirt-ocaml-dev::
 	mv $(DESTDIR_DEV)/$(OCAML_STDLIB_DIR)/libvirt/*.so $(DESTDIR)/$(OCAML_DLL_DIR)/
