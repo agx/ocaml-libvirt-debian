@@ -1,0 +1,5 @@
+This package use quilt for patching the source. 
+
+Please consider reading quilt manpage to patch the source.
+
+ -- Sylvain Le Gall <gildor@debian.org>  Sat, 28 Jun 2008 16:54:35 +0200
