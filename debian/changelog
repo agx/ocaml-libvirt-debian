@@ -1,8 +1,9 @@
 ocaml-libvirt (0.4.2.4-2) UNRELEASED; urgency=low
 
   * NOT RELEASED YET
+  * Add a watch file
 
- -- Sylvain Le Gall <gildor@debian.org>  Sat, 28 Jun 2008 19:28:20 +0200
+ -- Sylvain Le Gall <gildor@debian.org>  Sun, 29 Jun 2008 22:17:34 +0200
 
 ocaml-libvirt (0.4.2.4-1) unstable; urgency=low
 
