@@ -1,4 +1,4 @@
-ocaml-libvirt (0.4.2.4-1) unstable; urgency=low
+ocaml-libvirt (0.4.4.0-1) unstable; urgency=low
 
   [ Guido Guenther ]
   * Initial release (Closes: #488229)
@@ -10,4 +10,4 @@ ocaml-libvirt (0.4.2.4-1) unstable; urgency=low
   * Update debian/copyright to
     http://wiki.debian.org/Proposals/CopyrightFormat
 
- -- Sylvain Le Gall <gildor@debian.org>  Mon, 07 Jul 2008 11:01:34 +0200
+ -- Sylvain Le Gall <gildor@debian.org>  Mon, 07 Jul 2008 14:54:44 +0200
