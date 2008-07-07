@@ -1,4 +1,4 @@
-ocaml-libvirt (0.4.4.0-1) unstable; urgency=low
+ocaml-libvirt (0.4.4.1-1) unstable; urgency=low
 
   [ Guido Guenther ]
   * Initial release (Closes: #488229)
