@@ -68,6 +68,7 @@ clean::
 	-$(RM) '$(CURDIR)/po/Makefile'
 	-$(RM) '$(CURDIR)/debian/libvirt-ocaml-dev.dirs'
 	-$(RM) '$(CURDIR)/debian/libvirt-ocaml.dirs'
+	-$(RM) '$(CURDIR)/debian/xml-man/en/mlvirsh.1'
 
 install/libvirt-ocaml-dev::
 	mv $(DESTDIR_DEV)/$(OCAML_STDLIB_DIR)/libvirt/*.so $(DESTDIR)/$(OCAML_DLL_DIR)/
