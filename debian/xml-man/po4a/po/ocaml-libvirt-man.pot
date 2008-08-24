@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2008-06-28 18:24+0200\n"
+"POT-Creation-Date: 2008-08-24 17:54+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -63,7 +63,7 @@ msgstr ""
 # type: Content of: <refentry><refsect1><para>
 #: debian/xml-man/en/mlvirsh.xml:68
 msgid ""
-"&dhprg;is an almost complete reimplementation of <command>virsh</command>, "
+"&dhprg; is an almost complete reimplementation of <command>virsh</command>, "
 "which is mostly command compatible (there are a very few commands missing, "
 "and some commands have a slightly different syntax, but broadly speaking "
 "they are equivalent programs except that one is written in C and the other "
@@ -789,4 +789,14 @@ msgid ""
 "Lesser General Public License, Version 2.1 or any later version published by "
 "the Free Software Foundation; considering as source code all the file that "
 "enable the production of this manpage."
+msgstr ""
+
+# type: Content of: <refentryinfo><copyright><holder>
+#: debian/xml-man/en/refentryinfo.xml:38
+msgid "Sylvain Le Gall"
+msgstr ""
+
+# type: Content of: <refentryinfo><date>
+#: debian/xml-man/en/refentryinfo.xml:40
+msgid "June 28, 2008"
 msgstr ""
