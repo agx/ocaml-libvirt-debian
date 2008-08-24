@@ -26,7 +26,7 @@ Description: OCaml bindings for libvirt
 
 Package: libvirt-ocaml-dev
 Architecture: any
-Depends: ocaml-nox-${F:OCamlABI}, libvirt-ocaml (= ${binary:Version})
+Depends: ocaml-nox-${F:OCamlABI}, libvirt-ocaml (= ${binary:Version}), libvirt-dev
 Description: OCaml bindings for libvirt
  This library provides OCaml bindings for using libvirt.
  .
