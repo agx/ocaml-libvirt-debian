@@ -65,7 +65,7 @@
     <para>This manual page was written for the &debian; distribution
       because the original program does not have a manual page.</para>
 
-    <para>&dhprg;is an almost complete reimplementation of
+    <para>&dhprg; is an almost complete reimplementation of
       <command>virsh</command>, which is mostly command compatible (there are a
       very few commands missing, and some commands have a slightly different
       syntax, but broadly speaking they are equivalent programs except that one
