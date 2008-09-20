@@ -3,7 +3,7 @@ Section: libdevel
 Priority: extra
 Maintainer: Debian Libvirt Maintainers <pkg-libvirt-maintainers@lists.alioth.debian.org>
 Uploaders: Guido Guenther <agx@sigxcpu.org>, Sylvain Le Gall <gildor@debian.org>
-Build-Depends: cdbs, debhelper (>= 6), autotools-dev, libvirt-bin, ocaml-nox,
+Build-Depends: cdbs, debhelper (>= 6), autotools-dev, ocaml-nox,
  ocaml-findlib, quilt, libvirt-dev, docbook-xml (>= 4.4), docbook-xsl, 
  libxml2-utils, xsltproc, po4a
 Standards-Version: 3.8.0
