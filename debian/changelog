@@ -1,15 +1,12 @@
-ocaml-libvirt (0.4.4.2-1) UNRELEASED; urgency=low
+ocaml-libvirt (0.4.4.2-1) unstable; urgency=low
 
   * New Upstream Version
-
- -- Sylvain Le Gall <gildor@debian.org>  Sat, 07 Mar 2009 15:39:55 +0100
-
-ocaml-libvirt (0.4.4.1-4) UNRELEASED; urgency=low
-
-  * NOT RELEASED YET
   * Add debian/gbp.conf
+  * Add dh-ocaml build-dependency (rules/ocaml.mk)
+  * Upgrade debian/compat to 7 (use debian/clean)
+  * Add ${misc:Depends} to dependencies
 
- -- Sylvain Le Gall <gildor@debian.org>  Sat, 07 Mar 2009 15:39:23 +0100
+ -- Sylvain Le Gall <gildor@debian.org>  Sat, 07 Mar 2009 15:50:02 +0100
 
 ocaml-libvirt (0.4.4.1-3) unstable; urgency=low
 

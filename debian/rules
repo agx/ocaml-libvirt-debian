@@ -20,7 +20,7 @@
 
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/autotools.mk
-include /usr/share/cdbs/1/class/ocaml.mk
+include /usr/share/cdbs/1/rules/ocaml.mk
 include /usr/share/cdbs/1/rules/patchsys-quilt.mk
 include $(CURDIR)/debian/mk/docbook-manpage.mk
 
@@ -35,7 +35,7 @@ DEB_MAKE_INSTALL_TARGET  := install-opt
 else
 DEB_MAKE_INSTALL_TARGET  := install-byte
 endif
-DEB_MAKE_INSTALL_TARGET  += OCAMLDESTDIR="$(DESTDIR_DEV)/$(OCAML_STDLIB_DIR)" DESTDIR="$(DESTDIR_DEV)"
+DEB_MAKE_INSTALL_TARGET  += OCAMLFIND_DESTDIR="$(DESTDIR_DEV)/$(OCAML_STDLIB_DIR)" prefix="$(DESTDIR)/usr"
 
 OCAML_OCAMLDOC_PACKAGES = libvirt-ocaml-dev
 
@@ -54,21 +54,14 @@ install/libvirt-ocaml::
 
 clean::
 	if test -e $(CURDIR)/po/Makefile; then $(MAKE) -C '$(CURDIR)/po' clean; fi
-	-$(RM) '$(CURDIR)/META'
 	-$(RM) '$(CURDIR)/Make.rules'
 	-$(RM) '$(CURDIR)/Makefile'
-	-$(RM) '$(CURDIR)/config.h'
-	-$(RM) '$(CURDIR)/config.log'
-	-$(RM) '$(CURDIR)/config.status'
-	-$(RM) '$(CURDIR)/examples/Makefile'
-	-$(RM) '$(CURDIR)/libvirt/Makefile'
-	-$(RM) '$(CURDIR)/libvirt/libvirt_version.ml'
-	-$(RM) '$(CURDIR)/mlvirsh/Makefile'
-	-$(RM) '$(CURDIR)/mlvirsh/mlvirsh_gettext.ml'
 	-$(RM) '$(CURDIR)/po/Makefile'
-	-$(RM) '$(CURDIR)/debian/libvirt-ocaml-dev.dirs'
-	-$(RM) '$(CURDIR)/debian/libvirt-ocaml.dirs'
-	-$(RM) '$(CURDIR)/debian/xml-man/en/mlvirsh.1'
+	-$(RM) '$(CURDIR)/libvirt/Makefile'
+	-$(RM) '$(CURDIR)/mlvirsh/Makefile'
+	-$(RM) '$(CURDIR)/examples/Makefile'
+	-$(RM) '$(CURDIR)/libvirt/.depend'
+	-$(RM) '$(CURDIR)/mlvirsh/.depend'
 
 install/libvirt-ocaml-dev::
 	mv $(DESTDIR_DEV)/$(OCAML_STDLIB_DIR)/libvirt/*.so $(DESTDIR)/$(OCAML_DLL_DIR)/
