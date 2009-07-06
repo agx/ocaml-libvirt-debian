@@ -302,9 +302,9 @@ let do_command =
     | D.VcpuRunning -> s_"running"
     | D.VcpuBlocked -> s_"blocked"
   in
-  let print_domain_array doms =
-    Array.iter (
-      fun dom ->
+  let print_domain_list doms =
+    List.iter (
+      fun (dom, info) ->
 	let id =
 	  try sprintf "%d" (D.get_id dom)
 	  with Libvirt.Virterror _ -> "" in
@@ -313,7 +313,7 @@ let do_command =
 	  with Libvirt.Virterror _ -> "" in
 	let state =
 	  try
-	    let { D.state = state } = D.get_info dom in
+	    let { D.state = state } = info in
 	    string_of_domain_state state
 	  with Libvirt.Virterror _ -> "" in
 	printf "%5s %-30s %s\n" id name state
@@ -454,9 +454,19 @@ let do_command =
       cmd4 print_string
 	(fun dom path offset size ->
 	   let buf = String.create size in
-	   D.block_peek dom path offset size buf 0;
+	   let max_peek = D.max_peek dom in
+	   let rec loop i =
+	     let remaining = size-i in
+	     if remaining > 0 then (
+	       let size = min remaining max_peek in
+	       D.block_peek dom path
+		 (Int64.add offset (Int64.of_int i)) size buf i;
+	       loop (i+size)
+	     )
+	   in
+	   loop 0;
 	   buf)
-	(arg_readonly_connection domain_of_string)
+	(arg_full_connection domain_of_string)
 	string_of_string Int64.of_string int_of_string,
       s_"Peek into a block device of a domain.",
       [dom_help; s_"path",s_"Path to block device";
@@ -494,9 +504,19 @@ let do_command =
       cmd3 print_string
 	(fun dom offset size ->
 	   let buf = String.create size in
-	   D.memory_peek dom [D.Virtual] offset size buf 0;
+	   let max_peek = D.max_peek dom in
+	   let rec loop i =
+	     let remaining = size-i in
+	     if remaining > 0 then (
+	       let size = min remaining max_peek in
+	       D.memory_peek dom [D.Virtual]
+		 (Int64.add offset (Int64.of_int i)) size buf i;
+	       loop (i+size)
+	     )
+	   in
+	   loop 0;
 	   buf)
-	(arg_readonly_connection domain_of_string)
+	(arg_full_connection domain_of_string)
 	Int64.of_string int_of_string,
       s_"Peek into memory of a device.",
       [dom_help; s_"offset",s_"Offset in memory";
@@ -556,21 +576,24 @@ let do_command =
       s_"Print the hostname.",
       [];
     "list",
-      cmd0 print_domain_array
+      cmd0 print_domain_list
 	(fun () ->
 	   let c = get_readonly_connection () in
-	   let n = C.num_of_domains c in
-	   let domids = C.list_domains c n in
-	   Array.map (D.lookup_by_id c) domids),
+	   D.get_domains_and_infos c [D.ListActive]),
+      s_"List the running domains.",
+      [];
+    "list-all",
+      cmd0 print_domain_list
+	(fun () ->
+	   let c = get_readonly_connection () in
+	   D.get_domains_and_infos c [D.ListAll]),
       s_"List the running domains.",
       [];
     "list-defined",
-      cmd0 print_domain_array
+      cmd0 print_domain_list
 	(fun () ->
 	   let c = get_readonly_connection () in
-	   let n = C.num_of_defined_domains c in
-	   let domnames = C.list_defined_domains c n in
-	   Array.map (D.lookup_by_name c) domnames),
+	   D.get_domains_and_infos c [D.ListInactive]),
       s_"List the defined but not running domains.",
       [];
     "quit",
