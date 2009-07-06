@@ -3,7 +3,7 @@ ocaml-libvirt (0.6.1.0-1) unstable; urgency=low
   * New Upstream Version
   * Add build dependency on libgettext-ocaml-dev
   * Upgrade standards-version to 3.8.2 (section ocaml)
-
+  * Tighten build-depends to ease OCaml 3.11.1 transition
 
  -- Sylvain Le Gall <gildor@debian.org>  Mon, 06 Jul 2009 22:53:40 +0200
 
