@@ -61,47 +61,44 @@ v}
    {{:http://libvirt.org/html/libvirt-libvirt.html}virConnect*, virDomain* and virNetwork* functions from libvirt}.
    For brevity I usually rename these modules like this:
 
-{v
+{[
 module C = Libvirt.Connect
 module D = Libvirt.Domain
 module N = Libvirt.Network
-v}
+]}
 
    To get a connection handle, assuming a Xen hypervisor:
 
-{v
+{[
 let name = "xen:///"
 let conn = C.connect_readonly ~name ()
-v}
+]}
 
    {3 Example: List running domains}
 
-{v
+{[
 open Printf
 
-let n = C.num_of_domains conn in
-let ids = C.list_domains conn n in
-let domains = Array.map (D.lookup_by_id conn) ids in
-Array.iter (
+let domains = D.get_domains conn [D.ListActive] in
+List.iter (
   fun dom ->
     printf "%8d %s\n%!" (D.get_id dom) (D.get_name dom)
 ) domains;
-v}
+]}
 
    {3 Example: List inactive domains}
 
-{v
-let n = C.num_of_defined_domains conn in
-let names = C.list_defined_domains conn n in
-Array.iter (
-  fun name ->
-    printf "inactive %s\n%!" name
-) names;
-v}
+{[
+let domains = D.get_domains conn [D.ListInactive] in
+List.iter (
+  fun dom ->
+    printf "inactive %s\n%!" (D.get_name dom)
+) domains;
+]}
 
    {3 Example: Print node info}
 
-{v
+{[
 let node_info = C.get_node_info conn in
 printf "model = %s\n" node_info.C.model;
 printf "memory = %Ld K\n" node_info.C.memory;
@@ -117,7 +114,7 @@ printf "hostname = %s\n%!" hostname;
 
 let uri = C.get_uri conn in
 printf "uri = %s\n%!" uri
-v}
+]}
 
 *)
 
@@ -140,7 +137,7 @@ v}
     Note that even though you hold open (eg) a domain object, that
     doesn't mean that the domain (virtual machine) actually exists.
     The domain could have been shut down or deleted by another user.
-    Thus domain objects can through odd exceptions at any time.
+    Thus domain objects can raise odd exceptions at any time.
     This is just the nature of virtualisation.
 
     {3 Backwards and forwards compatibility}
@@ -157,6 +154,15 @@ v}
     exceptions.
 
     We don't support libvirt < 0.2.1, and never will so don't ask us.
+
+    {3 Get list of domains and domain infos}
+
+    This is a very common operation, and libvirt supports various
+    different methods to do it.  We have hidden the complexity in a
+    flexible {!Libvirt.Domain.get_domains} and
+    {!Libvirt.Domain.get_domains_and_infos} calls which is easy to use and
+    automatically chooses the most efficient method depending on the
+    version of libvirt in use.
 
     {3 Threads}
 
@@ -227,17 +233,23 @@ type ro = [`R]
 
 	If you want to handle both read-write and read-only
 	connections at runtime, use a variant similar to this:
-{v
+{[
 type conn_t =
     | No_connection
     | Read_only of Libvirt.ro Libvirt.Connect.t
     | Read_write of Libvirt.rw Libvirt.Connect.t
-v}
+]}
 	See also the source of [mlvirsh].
     *)
 
+(** {3 Forward definitions}
+
+    These definitions are placed here to avoid the need to
+    use recursive module dependencies.
+*)
+
 type ('a, 'b) job_t
-(** Forward definition of {!Job.t} to avoid recursive module dependencies. *)
+(** Forward definition of {!Job.t}. *)
 
 (** {3 Connections} *)
 
@@ -293,7 +305,12 @@ sig
   val list_domains : [>`R] t -> int -> int array
     (** [list_domains conn max] returns the running domain IDs,
 	up to a maximum of [max] entries.
+
 	Call {!num_of_domains} first to get a value for [max].
+
+	See also:
+	{!Libvirt.Domain.get_domains},
+	{!Libvirt.Domain.get_domains_and_infos}.
     *)
   val num_of_domains : [>`R] t -> int
     (** Returns the number of running domains. *)
@@ -305,7 +322,12 @@ sig
     (** [list_defined_domains conn max]
 	returns the names of the inactive domains, up to
 	a maximum of [max] entries.
+
 	Call {!num_of_defined_domains} first to get a value for [max].
+
+	See also:
+	{!Libvirt.Domain.get_domains},
+	{!Libvirt.Domain.get_domains_and_infos}.
     *)
   val num_of_networks : [>`R] t -> int
     (** Returns the number of networks. *)
@@ -395,7 +417,7 @@ sig
     | InfoShutdown | InfoShutoff | InfoCrashed
 
   type info = {
-    state : state;			(** running state *)
+    state : state;		        (** running state *)
     max_mem : int64;			(** maximum memory in kilobytes *)
     memory : int64;			(** memory used in kilobytes *)
     nr_virt_cpu : int;			(** number of virtual CPUs *)
@@ -421,6 +443,11 @@ sig
 
   type memory_flag = Virtual
 
+  type list_flag =
+    | ListActive
+    | ListInactive
+    | ListAll
+
   type block_stats = {
     rd_req : int64;
     rd_bytes : int64;
@@ -440,6 +467,31 @@ sig
     tx_drop : int64;
   }
 
+  val max_peek : [>`R] t -> int
+    (** Maximum size supported by the {!block_peek} and {!memory_peek}
+	functions.  If you want to peek more than this then you must
+	break your request into chunks. *)
+
+  val list_all_domains : 'a Connect.t -> ?want_info:bool -> list_flag list -> 'a t array * info array
+    (** [list_all_domains conn flags] returns all domains which
+	match [flags].
+
+	This can return both active and inactive domains.  The
+	list of flags controls what domains are returned.  See
+	{!list_flag}.
+
+	The two arrays returned will have the same length, unless
+	[~want_info] is [false] in which case the info array
+	will be zero-length.  The default for [~want_info] is [true].
+	In most cases there is no extra penalty for getting the
+	info fields, or the penalty is insignificant.
+
+	This call was introduced in libvirt 0.4.5.  Because you
+	might dynamically link to an older version of libvirt which
+	doesn't have this call, you should use {!get_domains}
+	or {!get_domains_and_infos} which use the most efficient
+	way to get domains for the available version of libvirt.
+    *)
   val create_linux : [>`W] Connect.t -> xml -> rw t
     (** Create a new guest domain (not necessarily a Linux one)
 	from the given XML.
@@ -491,12 +543,8 @@ sig
   val get_uuid_string : [>`R] t -> string
     (** Get the domain UUID (as a printable string). *)
   val get_id : [>`R] t -> int
-    (** [getid dom] returns the ID of the domain.
-
-	Do not call this on a defined but not running domain.  Those
-	domains don't have IDs, and you'll get an error here.
-    *)
-
+    (** [get_id dom] returns the ID of the domain.  In most cases
+	this returns [-1] if the domain is not running. *)
   val get_os_type : [>`R] t -> string
     (** Get the operating system type. *)
   val get_max_memory : [>`R] t -> int64
@@ -562,24 +610,54 @@ sig
   val interface_stats : [>`R] t -> string -> interface_stats
     (** Returns network interface stats. *)
 
-  val block_peek : [>`R] t -> string -> int64 -> int -> string -> int -> unit
+  val block_peek : [>`W] t -> string -> int64 -> int -> string -> int -> unit
     (** [block_peek dom path offset size buf boff] reads [size] bytes at
 	[offset] in the domain's [path] block device.
 
 	If successful then the data is written into [buf] starting
-	at offset [boff], for [size] bytes. *)
-  val memory_peek : [>`R] t -> memory_flag list -> int64 -> int ->
+	at offset [boff], for [size] bytes.
+
+	See also {!max_peek}. *)
+  val memory_peek : [>`W] t -> memory_flag list -> int64 -> int ->
     string -> int -> unit
     (** [memory_peek dom Virtual offset size] reads [size] bytes
 	at [offset] in the domain's virtual memory.
 
 	If successful then the data is written into [buf] starting
-	at offset [boff], for [size] bytes. *)
+	at offset [boff], for [size] bytes.
+
+	See also {!max_peek}. *)
 
   external const : [>`R] t -> ro t = "%identity"
     (** [const dom] turns a read/write domain handle into a read-only
 	domain handle.  Note that the opposite operation is impossible.
       *)
+
+  val get_domains : ([>`R] as 'a) Connect.t -> list_flag list -> 'a t list
+    (** Get the active and/or inactive domains using the most
+	efficient method available.
+
+	See also:
+	{!get_domains_and_infos},
+	{!list_all_domains},
+	{!Connect.list_domains},
+	{!Connect.list_defined_domains}.
+  *)
+
+  val get_domains_and_infos : ([>`R] as 'a) Connect.t -> list_flag list ->
+    ('a t * info) list
+    (** This gets the active and/or inactive domains and the
+	domain info for each one using the most efficient
+	method available.
+
+	See also:
+	{!get_domains},
+	{!list_all_domains},
+	{!Connect.list_domains},
+	{!Connect.list_defined_domains},
+	{!get_info}.
+    *)
+
 end
   (** Module dealing with domains.  [Domain.t] is the
       domain object. *)
@@ -999,3 +1077,16 @@ exception Not_supported of string
     See also {{:http://libvirt.org/hvsupport.html}http://libvirt.org/hvsupport.html}
 *)
 
+(** {3 Utility functions} *)
+
+val map_ignore_errors : ('a -> 'b) -> 'a list -> 'b list
+(** [map_ignore_errors f xs] calls function [f] for each element of [xs].
+
+    This is just like [List.map] except that if [f x] throws a
+    {!Virterror.t} exception, the error is ignored and [f x]
+    is not returned in the final list.
+
+    This function is primarily useful when dealing with domains which
+    might 'disappear' asynchronously from the currently running
+    program.
+*)
