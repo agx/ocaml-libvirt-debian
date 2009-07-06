@@ -1,12 +1,9 @@
-ocaml-libvirt (0.6.1.0-2) UNRELEASED; urgency=low
-
-  * Add build dependency on libgettext-ocaml-dev
-
- -- Sylvain Le Gall <gildor@debian.org>  Mon, 06 Jul 2009 21:34:25 +0000
-
 ocaml-libvirt (0.6.1.0-1) unstable; urgency=low
 
   * New Upstream Version
+  * Add build dependency on libgettext-ocaml-dev
+  * Upgrade standards-version to 3.8.2 (section ocaml)
+
 
  -- Sylvain Le Gall <gildor@debian.org>  Mon, 06 Jul 2009 22:53:40 +0200
 
