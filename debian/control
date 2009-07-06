@@ -15,7 +15,8 @@ Build-Depends: cdbs,
  libxml2-utils, 
  xsltproc, 
  po4a, 
- dh-ocaml (>= 0.4.1)
+ dh-ocaml (>= 0.4.1), 
+ libgettext-ocaml-dev
 Standards-Version: 3.8.0
 Vcs-Browser: http://git.debian.org/?p=pkg-ocaml-maint/packages/ocaml-libvirt.git
 Vcs-Git: git://git.debian.org/git/pkg-ocaml-maint/packages/ocaml-libvirt.git
