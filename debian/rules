@@ -60,8 +60,6 @@ clean::
 	-$(RM) '$(CURDIR)/libvirt/Makefile'
 	-$(RM) '$(CURDIR)/mlvirsh/Makefile'
 	-$(RM) '$(CURDIR)/examples/Makefile'
-	-$(RM) '$(CURDIR)/libvirt/.depend'
-	-$(RM) '$(CURDIR)/mlvirsh/.depend'
 
 install/libvirt-ocaml-dev::
 	mv $(DESTDIR_DEV)/$(OCAML_STDLIB_DIR)/libvirt/*.so $(DESTDIR)/$(OCAML_DLL_DIR)/
