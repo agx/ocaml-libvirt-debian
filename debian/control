@@ -15,16 +15,17 @@ Build-Depends: cdbs,
  libxml2-utils, 
  xsltproc, 
  po4a, 
- dh-ocaml (>= 0.4.1), 
+ dh-ocaml (>= 0.9.1), 
  libgettext-ocaml-dev (>> 0.3.2-2)
-Standards-Version: 3.8.2
+Standards-Version: 3.8.3
 Vcs-Browser: http://git.debian.org/?p=pkg-ocaml-maint/packages/ocaml-libvirt.git
 Vcs-Git: git://git.debian.org/git/pkg-ocaml-maint/packages/ocaml-libvirt.git
 Homepage: http://libvirt.org/ocaml/
 
 Package: libvirt-ocaml
 Architecture: any
-Depends: ocaml-base-nox-${F:OCamlABI}, ${shlibs:Depends}, ${misc:Depends}
+Depends: ${ocaml:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Provides: ${ocaml:Provides}
 Description: OCaml bindings for libvirt
  This library provides OCaml bindings for using libvirt.
  .
@@ -37,7 +38,8 @@ Description: OCaml bindings for libvirt
 
 Package: libvirt-ocaml-dev
 Architecture: any
-Depends: ocaml-nox-${F:OCamlABI}, libvirt-ocaml (= ${binary:Version}), libvirt-dev, ${misc:Depends}
+Depends: ${ocaml:Depends}, libvirt-ocaml (= ${binary:Version}), libvirt-dev, ${misc:Depends}
+Provides: ${ocaml:Provides}
 Description: OCaml bindings for libvirt
  This library provides OCaml bindings for using libvirt.
  .

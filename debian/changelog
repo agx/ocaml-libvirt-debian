@@ -1,3 +1,10 @@
+ocaml-libvirt (0.6.1.0-2) unstable; urgency=low
+
+  * Use dh_ocaml 0.9.1 features (dependencies, ocamldoc)
+  * Upgrade Standards-Version to 3.8.3 (no change)
+
+ -- Sylvain Le Gall <gildor@debian.org>  Tue, 08 Dec 2009 23:32:40 +0000
+
 ocaml-libvirt (0.6.1.0-1) unstable; urgency=low
 
   * New Upstream Version

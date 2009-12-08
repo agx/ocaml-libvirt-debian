@@ -18,9 +18,9 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
+include /usr/share/cdbs/1/rules/ocaml.mk
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/autotools.mk
-include /usr/share/cdbs/1/rules/ocaml.mk
 include /usr/share/cdbs/1/rules/patchsys-quilt.mk
 include $(CURDIR)/debian/mk/docbook-manpage.mk
 
@@ -36,8 +36,6 @@ else
 DEB_MAKE_INSTALL_TARGET  := install-byte
 endif
 DEB_MAKE_INSTALL_TARGET  += OCAMLFIND_DESTDIR="$(DESTDIR_DEV)/$(OCAML_STDLIB_DIR)" prefix="$(DESTDIR)/usr"
-
-OCAML_OCAMLDOC_PACKAGES = libvirt-ocaml-dev
 
 PO4A_SOURCES := $(CURDIR)/debian/xml-man/po4a/po4a.cfg
 
