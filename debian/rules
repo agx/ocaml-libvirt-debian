@@ -44,9 +44,3 @@ clean::
 
 install/libvirt-ocaml-dev::
 	mv $(DESTDIR_DEV)/$(OCAML_STDLIB_DIR)/libvirt/*.so $(DESTDIR)/$(OCAML_DLL_DIR)/
-
-redo-patches::
-	rm -f debian/patches/*
-	git format-patch -N -o debian/patches master...patch-queue | \
-		sed -e 's%debian/patches/%%' > debian/patches/series
-
