@@ -22,7 +22,6 @@ include /usr/share/cdbs/1/rules/ocaml.mk
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/autotools.mk
 include /usr/share/cdbs/1/rules/patchsys-quilt.mk
-include $(CURDIR)/debian/mk/docbook-manpage.mk
 
 DESTDIR_DEV=$(CURDIR)/debian/libvirt-ocaml-dev
 DESTDIR=$(CURDIR)/debian/libvirt-ocaml
@@ -37,34 +36,14 @@ DEB_MAKE_INSTALL_TARGET  := install-byte
 endif
 DEB_MAKE_INSTALL_TARGET  += OCAMLFIND_DESTDIR="$(DESTDIR_DEV)/$(OCAML_STDLIB_DIR)" prefix="$(DESTDIR)/usr"
 
-PO4A_SOURCES := $(CURDIR)/debian/xml-man/po4a/po4a.cfg
-
-DOCBOOK_MANPAGE_SOURCES := $(CURDIR)/debian/xml-man/en/mlvirsh.xml
-
-DOCBOOK_MANPAGE_EXTRA_SOURCES := $(CURDIR)/debian/xml-man/en/license.xml      \
-                                 $(CURDIR)/debian/xml-man/en/refentryinfo.xml
-
-build/libvirt-ocaml::
-	$(MAKE) -C '$(CURDIR)/po' all
-
-install/libvirt-ocaml::
-	$(MAKE) -C '$(CURDIR)/po' install PODIR=$(DESTDIR)/usr/share/locale
-
 clean::
-	if test -e $(CURDIR)/po/Makefile; then $(MAKE) -C '$(CURDIR)/po' clean; fi
 	-$(RM) '$(CURDIR)/Make.rules'
 	-$(RM) '$(CURDIR)/Makefile'
-	-$(RM) '$(CURDIR)/po/Makefile'
 	-$(RM) '$(CURDIR)/libvirt/Makefile'
-	-$(RM) '$(CURDIR)/mlvirsh/Makefile'
 	-$(RM) '$(CURDIR)/examples/Makefile'
 
 install/libvirt-ocaml-dev::
 	mv $(DESTDIR_DEV)/$(OCAML_STDLIB_DIR)/libvirt/*.so $(DESTDIR)/$(OCAML_DLL_DIR)/
-	if [ -r $(DESTDIR_DEV)/usr/bin/mlvirsh ]; then \
-		mv $(DESTDIR_DEV)/usr/bin/mlvirsh $(DESTDIR)/usr/bin/; \
-		rmdir $(DESTDIR_DEV)/usr/bin; \
-	fi
 
 redo-patches::
 	rm -f debian/patches/*

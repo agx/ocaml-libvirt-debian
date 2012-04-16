@@ -10,13 +10,7 @@ Build-Depends: cdbs,
  ocaml-findlib, 
  quilt, 
  libvirt-dev, 
- docbook-xml (>= 4.4), 
- docbook-xsl, 
- libxml2-utils, 
- xsltproc, 
- po4a, 
- dh-ocaml (>= 0.9.1), 
- libgettext-ocaml-dev (>> 0.3.2-2)
+ dh-ocaml (>= 0.9.1)
 Standards-Version: 3.8.3
 Vcs-Browser: http://git.debian.org/?p=pkg-ocaml-maint/packages/ocaml-libvirt.git
 Vcs-Git: git://git.debian.org/git/pkg-ocaml-maint/packages/ocaml-libvirt.git
