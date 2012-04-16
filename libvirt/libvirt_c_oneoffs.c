@@ -194,91 +194,6 @@ ocaml_libvirt_connect_node_get_cells_free_memory (value connv,
 #endif
 }
 
-#ifdef HAVE_WEAK_SYMBOLS
-#ifdef HAVE_VIRCONNECTLISTALLDOMAINS
-extern int virConnectListAllDomains (virConnectPtr conn,
-                                     virDomainPtr **domains,
-                                     virDomainInfo **infos,
-                                     unsigned long stateflags,
-                                     unsigned long flags)
-  __attribute__((weak));
-#endif
-#endif
-
-CAMLprim value
-ocaml_libvirt_connect_list_all_domains (value connv,
-                                        value wantinfov,
-                                        value flagsv)
-{
-#ifdef HAVE_VIRCONNECTLISTALLDOMAINS
-  CAMLparam3 (connv, wantinfov, flagsv);
-  CAMLlocal4 (flagv, rv, rv1, rv2);
-  CAMLlocal2 (v1, v2);
-  virConnectPtr conn = Connect_val (connv);
-  virDomainPtr *domains;
-  virDomainInfo *infos;
-  int want_info, i, r, flag;
-  unsigned long flags = 0;
-
-  /* ?want_info */
-  if (wantinfov == Val_int (0)) /* None == true */
-    want_info = 1;
-  else
-    want_info = Bool_val (Field (wantinfov, 0));
-
-  /* Iterate over the list of flags. */
-  for (; flagsv != Val_int (0); flagsv = Field (flagsv, 1)) {
-    flagv = Field (flagsv, 0);
-    flag = Int_val (flagv);
-    switch (flag) {
-    case 0: flags |= VIR_DOMAIN_LIST_ACTIVE; break;
-    case 1: flags |= VIR_DOMAIN_LIST_INACTIVE; break;
-    case 2: flags |= VIR_DOMAIN_LIST_ALL; break;
-    }
-  }
-
-  WEAK_SYMBOL_CHECK (virConnectListAllDomains);
-  NONBLOCKING (r = virConnectListAllDomains (conn, &domains,
-                                             want_info ? &infos : NULL,
-                                             flags, 0));
-  CHECK_ERROR (r == -1, conn, "virConnectListAllDomains");
-
-  /* Convert the result into a pair of arrays. */
-  rv1 = caml_alloc (r, 0);
-  for (i = 0; i < r; ++i) {
-    v1 = Val_domain (domains[i], connv);
-    Store_field (rv1, i, v1);
-  }
-  free (domains);
-
-  if (want_info) {
-    rv2 = caml_alloc (r, 0);
-
-    for (i = 0; i < r; ++i) {
-      v1 = caml_alloc (5, 0);
-      Store_field (v1, 0, Val_int (infos[i].state));
-      v2 = caml_copy_int64 (infos[i].maxMem); Store_field (v1, 1, v2);
-      v2 = caml_copy_int64 (infos[i].memory); Store_field (v1, 2, v2);
-      Store_field (v1, 3, Val_int (infos[i].nrVirtCpu));
-      v2 = caml_copy_int64 (infos[i].cpuTime); Store_field (v1, 4, v2);
-
-      Store_field (rv2, i, v1);
-    }
-
-    free (infos);
-  }
-  else
-    rv2 = caml_alloc (0, 0); /* zero-length array */
-
-  rv = caml_alloc_tuple (2);
-  Store_field (rv, 0, rv1);
-  Store_field (rv, 1, rv2);
-  CAMLreturn (rv);
-#else
-  not_supported ("virConnectListAllDomains");
-#endif
-}
-
 CAMLprim value
 ocaml_libvirt_domain_get_id (value domv)
 {
@@ -605,6 +520,121 @@ ocaml_libvirt_domain_get_vcpus (value domv, value maxinfov, value maplenv)
 }
 
 #ifdef HAVE_WEAK_SYMBOLS
+#ifdef HAVE_VIRDOMAINGETCPUSTATS
+extern int virDomainGetCPUStats (virDomainPtr domain,
+                         virTypedParameterPtr params,
+                         unsigned int nparams,
+                         int start_cpu,
+                         unsigned int ncpus,
+                         unsigned int flags)
+  __attribute__((weak));
+#endif
+#endif
+
+CAMLprim value
+ocaml_libvirt_domain_get_cpu_stats (value domv, value nr_pcpusv)
+{
+#ifdef HAVE_VIRDOMAINGETCPUSTATS
+  CAMLparam2 (domv, nr_pcpusv);
+  CAMLlocal5 (cpustats, param_head, param_node, typed_param, typed_param_value);
+  CAMLlocal1 (v);
+  virDomainPtr dom = Domain_val (domv);
+  virConnectPtr conn = Connect_domv (domv);
+  int nr_pcpus = Int_val (nr_pcpusv);
+  virTypedParameterPtr params;
+  int r, cpu, ncpus, nparams, i, j, pos;
+
+  /* get percpu information */
+  NONBLOCKING (nparams = virDomainGetCPUStats(dom, NULL, 0, 0, 1, 0));
+  CHECK_ERROR (nparams < 0, conn, "virDomainGetCPUStats");
+
+  if ((params = malloc(sizeof(*params) * nparams * 128)) == NULL)
+    caml_failwith ("virDomainGetCPUStats: malloc");
+
+  cpustats = caml_alloc (nr_pcpus, 0); /* cpustats: array of params(list of typed_param) */
+  cpu = 0;
+  while (cpu < nr_pcpus) {
+    ncpus = nr_pcpus - cpu > 128 ? 128 : nr_pcpus - cpu;
+
+    NONBLOCKING (r = virDomainGetCPUStats(dom, params, nparams, cpu, ncpus, 0));
+    CHECK_ERROR (r < 0, conn, "virDomainGetCPUStats");
+
+    for (i = 0; i < ncpus; i++) {
+      /* list of typed_param: single linked list of param_nodes */
+      param_head = Val_emptylist; /* param_head: the head param_node of list of typed_param */
+
+      if (params[i * nparams].type == 0) {
+        Store_field(cpustats, cpu + i, param_head);
+        continue;
+      }
+
+      for (j = r - 1; j >= 0; j--) {
+        pos = i * nparams + j;
+          if (params[pos].type == 0)
+            continue;
+
+        param_node = caml_alloc(2, 0); /* param_node: typed_param, next param_node */
+        Store_field(param_node, 1, param_head);
+        param_head = param_node;
+
+        typed_param = caml_alloc(2, 0); /* typed_param: field name(string), typed_param_value */
+        Store_field(param_node, 0, typed_param);
+        Store_field(typed_param, 0, caml_copy_string(params[pos].field));
+
+        /* typed_param_value: value with the corresponding type tag */
+        switch(params[pos].type) {
+        case VIR_TYPED_PARAM_INT:
+          typed_param_value = caml_alloc (1, 0);
+          v = caml_copy_int32 (params[pos].value.i);
+          break;
+        case VIR_TYPED_PARAM_UINT:
+          typed_param_value = caml_alloc (1, 1);
+          v = caml_copy_int32 (params[pos].value.ui);
+          break;
+        case VIR_TYPED_PARAM_LLONG:
+          typed_param_value = caml_alloc (1, 2);
+          v = caml_copy_int64 (params[pos].value.l);
+          break;
+        case VIR_TYPED_PARAM_ULLONG:
+          typed_param_value = caml_alloc (1, 3);
+          v = caml_copy_int64 (params[pos].value.ul);
+          break;
+        case VIR_TYPED_PARAM_DOUBLE:
+          typed_param_value = caml_alloc (1, 4);
+          v = caml_copy_double (params[pos].value.d);
+          break;
+        case VIR_TYPED_PARAM_BOOLEAN:
+          typed_param_value = caml_alloc (1, 5);
+          v = Val_bool (params[pos].value.b);
+          break;
+        case VIR_TYPED_PARAM_STRING:
+          typed_param_value = caml_alloc (1, 6);
+          v = caml_copy_string (params[pos].value.s);
+          free (params[pos].value.s);
+          break;
+        default:
+            /* XXX Memory leak on this path, if there are more
+             * VIR_TYPED_PARAM_STRING past this point in the array.
+             */
+          free (params);
+          caml_failwith ("virDomainGetCPUStats: "
+                         "unknown parameter type returned");
+        }
+        Store_field (typed_param_value, 0, v);
+        Store_field (typed_param, 1, typed_param_value);
+      }
+      Store_field (cpustats, cpu + i, param_head);
+    }
+    cpu += ncpus;
+  }
+  free(params);
+  CAMLreturn (cpustats);
+#else
+  not_supported ("virDomainGetCPUStats");
+#endif
+}
+
+#ifdef HAVE_WEAK_SYMBOLS
 #ifdef HAVE_VIRDOMAINMIGRATE
 extern virDomainPtr virDomainMigrate (virDomainPtr domain, virConnectPtr dconn,
 				      unsigned long flags, const char *dname,
@@ -916,41 +946,6 @@ ocaml_libvirt_storage_vol_get_info (value volv)
   CAMLreturn (rv);
 #else
   not_supported ("virStorageVolGetInfo");
-#endif
-}
-
-#ifdef HAVE_WEAK_SYMBOLS
-#ifdef HAVE_VIRJOBGETINFO
-extern int virJobGetInfo(virJobPtr job, virJobInfoPtr info)
-  __attribute__((weak));
-#endif
-#endif
-
-CAMLprim value
-ocaml_libvirt_job_get_info (value jobv)
-{
-#if HAVE_VIRJOBGETINFO
-  CAMLparam1 (jobv);
-  CAMLlocal1 (rv);
-  virJobPtr job = Job_val (jobv);
-  virConnectPtr conn = Connect_jobv (jobv);
-  virJobInfo info;
-  int r;
-
-  WEAK_SYMBOL_CHECK (virJobGetInfo);
-  NONBLOCKING (r = virJobGetInfo (job, &info));
-  CHECK_ERROR (r == -1, conn, "virJobGetInfo");
-
-  rv = caml_alloc (5, 0);
-  Store_field (rv, 0, Val_int (info.type));
-  Store_field (rv, 1, Val_int (info.state));
-  Store_field (rv, 2, Val_int (info.runningTime));
-  Store_field (rv, 3, Val_int (info.remainingTime));
-  Store_field (rv, 4, Val_int (info.percentComplete));
-
-  CAMLreturn (rv);
-#else
-  not_supported ("virJobGetInfo");
 #endif
 }
 
