@@ -2,7 +2,7 @@ Source: ocaml-libvirt
 Section: ocaml
 Priority: extra
 Maintainer: Debian Libvirt Maintainers <pkg-libvirt-maintainers@lists.alioth.debian.org>
-Uploaders: Guido Guenther <agx@sigxcpu.org>, Sylvain Le Gall <gildor@debian.org>
+Uploaders: Guido Guenther <agx@sigxcpu.org>, Sylvain Le Gall <gildor@debian.org>, Laurent Léonard <laurent@open-minds.org>
 Build-Depends: cdbs, 
  debhelper (>= 7), 
  autotools-dev, 
@@ -15,6 +15,7 @@ Standards-Version: 3.8.3
 Vcs-Browser: http://git.debian.org/?p=pkg-ocaml-maint/packages/ocaml-libvirt.git
 Vcs-Git: git://git.debian.org/git/pkg-ocaml-maint/packages/ocaml-libvirt.git
 Homepage: http://libvirt.org/ocaml/
+DM-Upload-Allowed: yes
 
 Package: libvirt-ocaml
 Architecture: any
