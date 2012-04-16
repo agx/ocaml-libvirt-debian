@@ -8,7 +8,6 @@ Build-Depends: cdbs,
  autotools-dev, 
  ocaml-nox (>= 3.11.1),
  ocaml-findlib, 
- quilt, 
  libvirt-dev, 
  dh-ocaml (>= 0.9.1)
 Standards-Version: 3.8.3
