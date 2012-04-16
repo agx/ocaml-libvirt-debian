@@ -1,3 +1,14 @@
+ocaml-libvirt (0.6.1.2-1) unstable; urgency=low
+
+  * [e66c65e] Imported Upstream version 0.6.1.2
+  * [730105b] Remove handling of obsolete mlvirsh and gettext support
+  * [1b5674d] Drop redo-patches target from debian/rules
+  * [f0e659c] Add myself as uploader and allow DM upload
+  * [3696ede] Remove unused patch system
+  * [3f9da9c] Bump Standards-Version to 3.9.3
+
+ -- Laurent Léonard <laurent@open-minds.org>  Mon, 16 Apr 2012 02:50:15 +0200
+
 ocaml-libvirt (0.6.1.0-2) unstable; urgency=low
 
   * Use dh_ocaml 0.9.1 features (dependencies, ocamldoc)
