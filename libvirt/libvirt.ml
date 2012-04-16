@@ -33,8 +33,6 @@ let uuid_string_length = 36
 type rw = [`R|`W]
 type ro = [`R]
 
-type ('a, 'b) job_t
-
 module Connect =
 struct
   type 'rw t
@@ -343,6 +341,13 @@ struct
     | SchedFieldInt64 of int64 | SchedFieldUInt64 of int64
     | SchedFieldFloat of float | SchedFieldBool of bool
 
+  type typed_param = string * typed_param_value
+  and typed_param_value =
+    | TypedFieldInt32 of int32 | TypedFieldUInt32 of int32
+    | TypedFieldInt64 of int64 | TypedFieldUInt64 of int64
+    | TypedFieldFloat of float | TypedFieldBool of bool
+    | TypedFieldString of string
+
   type migrate_flag = Live
 
   type memory_flag = Virtual
@@ -377,10 +382,7 @@ struct
    *)
   let max_peek _ = 65536
 
-  external list_all_domains : 'a Connect.t -> ?want_info:bool -> list_flag list -> 'a t array * info array = "ocaml_libvirt_connect_list_all_domains"
-
   external create_linux : [>`W] Connect.t -> xml -> rw t = "ocaml_libvirt_domain_create_linux"
-  external create_linux_job : [>`W] Connect.t -> xml -> ([`Domain], rw) job_t = "ocaml_libvirt_domain_create_linux_job"
   external lookup_by_id : 'a Connect.t -> int -> 'a t = "ocaml_libvirt_domain_lookup_by_id"
   external lookup_by_uuid : 'a Connect.t -> uuid -> 'a t = "ocaml_libvirt_domain_lookup_by_uuid"
   external lookup_by_uuid_string : 'a Connect.t -> string -> 'a t = "ocaml_libvirt_domain_lookup_by_uuid_string"
@@ -390,11 +392,8 @@ struct
   external suspend : [>`W] t -> unit = "ocaml_libvirt_domain_suspend"
   external resume : [>`W] t -> unit = "ocaml_libvirt_domain_resume"
   external save : [>`W] t -> filename -> unit = "ocaml_libvirt_domain_save"
-  external save_job : [>`W] t -> filename -> ([`Domain_nocreate], rw) job_t = "ocaml_libvirt_domain_save_job"
   external restore : [>`W] Connect.t -> filename -> unit = "ocaml_libvirt_domain_restore"
-  external restore_job : [>`W] Connect.t -> filename -> ([`Domain_nocreate], rw) job_t = "ocaml_libvirt_domain_restore_job"
   external core_dump : [>`W] t -> filename -> unit = "ocaml_libvirt_domain_core_dump"
-  external core_dump_job : [>`W] t -> filename -> ([`Domain_nocreate], rw) job_t = "ocaml_libvirt_domain_core_dump_job"
   external shutdown : [>`W] t -> unit = "ocaml_libvirt_domain_shutdown"
   external reboot : [>`W] t -> unit = "ocaml_libvirt_domain_reboot"
   external get_name : [>`R] t -> string = "ocaml_libvirt_domain_get_name"
@@ -413,12 +412,12 @@ struct
   external define_xml : [>`W] Connect.t -> xml -> rw t = "ocaml_libvirt_domain_define_xml"
   external undefine : [>`W] t -> unit = "ocaml_libvirt_domain_undefine"
   external create : [>`W] t -> unit = "ocaml_libvirt_domain_create"
-  external create_job : [>`W] t -> ([`Domain_nocreate], rw) job_t = "ocaml_libvirt_domain_create_job"
   external get_autostart : [>`R] t -> bool = "ocaml_libvirt_domain_get_autostart"
   external set_autostart : [>`W] t -> bool -> unit = "ocaml_libvirt_domain_set_autostart"
   external set_vcpus : [>`W] t -> int -> unit = "ocaml_libvirt_domain_set_vcpus"
   external pin_vcpu : [>`W] t -> int -> string -> unit = "ocaml_libvirt_domain_pin_vcpu"
   external get_vcpus : [>`R] t -> int -> int -> int * vcpu_info array * string = "ocaml_libvirt_domain_get_vcpus"
+  external get_cpu_stats : [>`R] t -> int -> typed_param list array = "ocaml_libvirt_domain_get_cpu_stats"
   external get_max_vcpus : [>`R] t -> int = "ocaml_libvirt_domain_get_max_vcpus"
   external attach_device : [>`W] t -> xml -> unit = "ocaml_libvirt_domain_attach_device"
   external detach_device : [>`W] t -> xml -> unit = "ocaml_libvirt_domain_detach_device"
@@ -430,94 +429,56 @@ struct
 
   external const : [>`R] t -> ro t = "%identity"
 
-  (* First time we are called, we will check if
-   * virConnectListAllDomains is supported.
-   *)
-  let have_list_all_domains = ref None
-
-  let check_have_list_all_domains conn =
-    match !have_list_all_domains with
-    | Some v -> v
-    | None ->
-	(* Check if virConnectListAllDomains is supported
-	 * by this version of libvirt.
-	 *)
-	let v =
-	  (* libvirt has a short-cut which makes this very quick ... *)
-	  try ignore (list_all_domains conn []); true
-	  with Not_supported "virConnectListAllDomains" -> false in
-	have_list_all_domains := Some v;
-	v
-
   let get_domains conn flags =
-    let have_list_all_domains = check_have_list_all_domains conn in
+    (* Old/slow/inefficient method. *)
+    let get_active, get_inactive =
+      if List.mem ListAll flags then
+	(true, true)
+      else
+	(List.mem ListActive flags, List.mem ListInactive flags) in
+    let active_doms =
+      if get_active then (
+	let n = Connect.num_of_domains conn in
+	let ids = Connect.list_domains conn n in
+	let ids = Array.to_list ids in
+	map_ignore_errors (lookup_by_id conn) ids
+      ) else [] in
 
-    if have_list_all_domains then (
-      (* Good, we can use the shiny new method. *)
-      let doms, _ = list_all_domains conn ~want_info:false flags in
-      Array.to_list doms
-    )
-    else (
-      (* Old/slow/inefficient method. *)
-      let get_active, get_inactive =
-	if List.mem ListAll flags then
-	  (true, true)
-	else
-	  (List.mem ListActive flags, List.mem ListInactive flags) in
-      let active_doms =
-	if get_active then (
-	  let n = Connect.num_of_domains conn in
-	  let ids = Connect.list_domains conn n in
-	  let ids = Array.to_list ids in
-	  map_ignore_errors (lookup_by_id conn) ids
-	) else [] in
+    let inactive_doms =
+      if get_inactive then (
+	let n = Connect.num_of_defined_domains conn in
+	let names = Connect.list_defined_domains conn n in
+	let names = Array.to_list names in
+	map_ignore_errors (lookup_by_name conn) names
+      ) else [] in
 
-      let inactive_doms =
-	if get_inactive then (
-	  let n = Connect.num_of_defined_domains conn in
-	  let names = Connect.list_defined_domains conn n in
-	  let names = Array.to_list names in
-	  map_ignore_errors (lookup_by_name conn) names
-	) else [] in
-
-      active_doms @ inactive_doms
-    )
+    active_doms @ inactive_doms
 
   let get_domains_and_infos conn flags =
-    let have_list_all_domains = check_have_list_all_domains conn in
+    (* Old/slow/inefficient method. *)
+    let get_active, get_inactive =
+      if List.mem ListAll flags then
+	(true, true)
+      else (List.mem ListActive flags, List.mem ListInactive flags) in
+    let active_doms =
+      if get_active then (
+	let n = Connect.num_of_domains conn in
+	let ids = Connect.list_domains conn n in
+	let ids = Array.to_list ids in
+	map_ignore_errors (lookup_by_id conn) ids
+      ) else [] in
 
-    if have_list_all_domains then (
-      (* Good, we can use the shiny new method. *)
-      let doms, infos = list_all_domains conn ~want_info:true flags in
-      let doms = Array.to_list doms and infos = Array.to_list infos in
-      List.combine doms infos
-    )
-    else (
-      (* Old/slow/inefficient method. *)
-      let get_active, get_inactive =
-	if List.mem ListAll flags then
-	  (true, true)
-	else (List.mem ListActive flags, List.mem ListInactive flags) in
-      let active_doms =
-	if get_active then (
-	  let n = Connect.num_of_domains conn in
-	  let ids = Connect.list_domains conn n in
-	  let ids = Array.to_list ids in
-	  map_ignore_errors (lookup_by_id conn) ids
-	) else [] in
+    let inactive_doms =
+      if get_inactive then (
+	let n = Connect.num_of_defined_domains conn in
+	let names = Connect.list_defined_domains conn n in
+	let names = Array.to_list names in
+	map_ignore_errors (lookup_by_name conn) names
+      ) else [] in
 
-      let inactive_doms =
-	if get_inactive then (
-	  let n = Connect.num_of_defined_domains conn in
-	  let names = Connect.list_defined_domains conn n in
-	  let names = Array.to_list names in
-	  map_ignore_errors (lookup_by_name conn) names
-	) else [] in
+    let doms = active_doms @ inactive_doms in
 
-      let doms = active_doms @ inactive_doms in
-
-      map_ignore_errors (fun dom -> (dom, get_info dom)) doms
-    )
+    map_ignore_errors (fun dom -> (dom, get_info dom)) doms
 end
 
 module Network =
@@ -528,11 +489,9 @@ struct
   external lookup_by_uuid : 'a Connect.t -> uuid -> 'a t = "ocaml_libvirt_network_lookup_by_uuid"
   external lookup_by_uuid_string : 'a Connect.t -> string -> 'a t = "ocaml_libvirt_network_lookup_by_uuid_string"
   external create_xml : [>`W] Connect.t -> xml -> rw t = "ocaml_libvirt_network_create_xml"
-  external create_xml_job : [>`W] Connect.t -> xml -> ([`Network], rw) job_t = "ocaml_libvirt_network_create_xml_job"
   external define_xml : [>`W] Connect.t -> xml -> rw t = "ocaml_libvirt_network_define_xml"
   external undefine : [>`W] t -> unit = "ocaml_libvirt_network_undefine"
   external create : [>`W] t -> unit = "ocaml_libvirt_network_create"
-  external create_job : [>`W] t -> ([`Network_nocreate], rw) job_t = "ocaml_libvirt_network_create_job"
   external destroy : [>`W] t -> unit = "ocaml_libvirt_network_destroy"
   external free : [>`R] t -> unit = "ocaml_libvirt_network_free"
   external get_name : [>`R] t -> string = "ocaml_libvirt_network_get_name"
@@ -607,26 +566,6 @@ struct
   external delete : [`W] t -> unit = "ocaml_libvirt_storage_vol_delete"
   external free : [>`R] t -> unit = "ocaml_libvirt_storage_vol_free"
   external const : [>`R] t -> ro t = "%identity"
-end
-
-module Job =
-struct
-  type ('jobclass, 'rw) t = ('jobclass, 'rw) job_t
-  type job_type = Bounded | Unbounded
-  type job_state = Running | Complete | Failed | Cancelled
-  type job_info = {
-    typ : job_type;
-    state : job_state;
-    running_time : int;
-    remaining_time : int;
-    percent_complete : int
-  }
-  external get_info : ('a,'b) t -> job_info = "ocaml_libvirt_job_get_info"
-  external get_domain : ([`Domain], 'a) t -> 'a Domain.t = "ocaml_libvirt_job_get_domain"
-  external get_network : ([`Network], 'a) t -> 'a Network.t = "ocaml_libvirt_job_get_network"
-  external cancel : ('a,'b) t -> unit = "ocaml_libvirt_job_cancel"
-  external free : ('a, [>`R]) t -> unit = "ocaml_libvirt_job_free"
-  external const : ('a, [>`R]) t -> ('a, ro) t = "%identity"
 end
 
 (* Initialization. *)
