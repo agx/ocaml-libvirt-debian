@@ -3,5 +3,3 @@ config.h
 config.log
 config.status
 libvirt/libvirt_version.ml
-mlvirsh/mlvirsh_gettext.ml
-debian/xml-man/en/mlvirsh.1
