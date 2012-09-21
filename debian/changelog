@@ -1,3 +1,9 @@
+ocaml-libvirt (0.6.1.2-2) UNRELEASED; urgency=low
+
+  * Remove Sylvain Le Gall from uploaders
+
+ -- Sylvain Le Gall <gildor@debian.org>  Fri, 21 Sep 2012 01:19:50 +0000
+
 ocaml-libvirt (0.6.1.2-1) unstable; urgency=low
 
   * [e66c65e] Imported Upstream version 0.6.1.2
