@@ -1,0 +1,15 @@
+Description: add CPPFLAGS to improve the hardening.
+Author: Joao Eriberto Mota Filho <eriberto@debian.org>
+Last-Update: 2016-12-18
+Index: ocaml-libvirt-0.6.1.4/libvirt/Makefile.in
+===================================================================
+--- ocaml-libvirt-0.6.1.4.orig/libvirt/Makefile.in
++++ ocaml-libvirt-0.6.1.4/libvirt/Makefile.in
+@@ -23,6 +23,7 @@ CFLAGS		= @CFLAGS@ \
+ 		   @DEBUG@ @WARNINGS@ @CFLAGS_FPIC@
+ LDFLAGS		= @LDFLAGS@
+ #		   -L"$(shell ocamlc -where)"
++CPPFLAGS	= @CPPFLAGS@ -D_FORTIFY_SOURCE=2
+ 
+ OCAMLC		= @OCAMLC@
+ OCAMLOPT	= @OCAMLOPT@

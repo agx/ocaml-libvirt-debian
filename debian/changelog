@@ -1,8 +1,40 @@
-ocaml-libvirt (0.6.1.2-2) UNRELEASED; urgency=low
+ocaml-libvirt (0.6.1.4-1) unstable; urgency=medium
 
-  * Remove Sylvain Le Gall from uploaders
+  * Team upload.
+  * New upstream release.
+  * Migrations:
+      - debian/copyright to 1.0 format.
+      - debian/rules to (new) reduced format.
+      - DebSrc to 3.0.
+      - DH level to 10.
+      - Using dh-autoreconf now (with CDBS).
+  * debian/clean: removed no longer needed files mlvirsh/mlvirsh_gettext.ml and
+    debian/xml-man/en/mlvirsh.1.
+  * debian/control:
+      - Added ocaml-findlib to Depends field.
+      - Bumped Standards-Version to 3.9.8.
+      - Changed Priority from extra to optional.
+      - Deduplicate short and long descriptions.
+      - Removed deprecated field DM-Upload-Allowed.
+      - Removed MIA co-maintainers.
+      - Removed the unneeded minimal version from relationships for dh-ocaml
+        and ocaml-nox build dependencies, because all current versions in
+        Debian, since old-old-stable, are newer.
+      - Updated the Vcs-* fields.
+  * debian/gbp.conf: removed, considering that 'pristine-tar = True' is default
+    for gbp command and subcommands.
+  * debian/patches/:
+      - 10_disable-Werror.patch: created to disable unnecessary option -Werror
+        to avoid a FTBFS.
+      - 20_improve-GCC-hardening.patch: add CPPFLAGS to improve the hardening.
+  * debian/rules:
+      - Added a line to remove the empty usr/bin directory.
+      - Removed some trash.
+  * debian/watch:
+      - Bumped to version 4.
+      - Improved.
 
- -- Sylvain Le Gall <gildor@debian.org>  Fri, 21 Sep 2012 01:19:50 +0000
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Sun, 18 Dec 2016 11:14:24 -0200
 
 ocaml-libvirt (0.6.1.2-1) unstable; urgency=low
 

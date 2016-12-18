@@ -1,0 +1,16 @@
+Description: disable unnecessary option -Werror to avoid a FTBFS.
+Author: Joao Eriberto Mota Filho <eriberto@debian.org>
+Last-Update: 2016-12-18
+Index: ocaml-libvirt-0.6.1.4/configure.ac
+===================================================================
+--- ocaml-libvirt-0.6.1.4.orig/configure.ac
++++ ocaml-libvirt-0.6.1.4/configure.ac
+@@ -33,7 +33,7 @@ dnl Select some C flags based on the hos
+ AC_CANONICAL_HOST
+ 
+ DEBUG="-g"
+-WARNINGS="-Wall -Werror"
++WARNINGS="-Wall"
+ CFLAGS_FPIC="-fPIC"
+ WIN32=no
+ case "$host" in
